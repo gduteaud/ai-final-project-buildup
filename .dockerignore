@@ -1,0 +1,25 @@
+# Local virtual environments and Python artifacts
+final-project-buildup-env/
+**/__pycache__/
+**/*.py[cod]
+**/.pytest_cache/
+**/.mypy_cache/
+
+# VCS
+.git/
+.gitignore
+
+# OS clutter
+**/.DS_Store
+**/Thumbs.db
+
+# Not used by the container build
+*.ipynb_checkpoints/
+
+# Secrets (mounted via env or compose)
+.env
+
+# Compose overrides
+docker-compose.override.yml
+
+

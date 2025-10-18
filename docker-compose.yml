@@ -1,0 +1,67 @@
+version: "3.9"
+
+services:
+  app1:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - APP_DIR=1
+    ports:
+      - "8501:8501"
+    env_file:
+      - .env
+    environment:
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      - EMBEDDING_API_KEY=${EMBEDDING_API_KEY}
+      - LLM_MODEL=${LLM_MODEL:-mistralai/mistral-7b-instruct:free}
+    restart: unless-stopped
+
+  app2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - APP_DIR=2
+    ports:
+      - "8502:8501"
+    env_file:
+      - .env
+    environment:
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      - LLM_MODEL=${LLM_MODEL:-meta-llama/llama-4-maverick:free}
+    restart: unless-stopped
+
+  app3:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - APP_DIR=3
+    ports:
+      - "8503:8501"
+    env_file:
+      - .env
+    environment:
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      - EMBEDDING_API_KEY=${EMBEDDING_API_KEY}
+      - LLM_MODEL=${LLM_MODEL:-mistralai/mistral-7b-instruct:free}
+    restart: unless-stopped
+
+  app4:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - APP_DIR=4
+    ports:
+      - "8504:8501"
+    env_file:
+      - .env
+    environment:
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      - EMBEDDING_API_KEY=${EMBEDDING_API_KEY}
+      - LLM_MODEL=${LLM_MODEL:-mistralai/mistral-7b-instruct:free}
+    restart: unless-stopped
+
+
