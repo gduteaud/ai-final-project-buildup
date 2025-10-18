@@ -1,0 +1,1 @@
+"""As a challenge, try to implement a better splitter than LangChain's RecursiveCharacterTextSplitter!"""
