@@ -1,6 +1,11 @@
 """Embedding helper using Jina AI Embeddings API.
 
 Provides a LangChain-compatible Embeddings implementation so it can be plugged into vector stores like Chroma.
+
+It does this by exposing a tiny class with just two methods that vector stores need:
+- embed_documents(list[str]) -> list[list[float]]
+- embed_query(str) -> list[float]
+
 """
 import requests
 import config
@@ -12,64 +17,45 @@ class JinaEmbeddings:
     Implements the subset of the LangChain Embeddings interface used by vector stores: embed_documents and embed_query.
     """
 
-    def __init__(
-        self,
-        api_key=None,
-        model=None,
-        task=None,
-        base_url="https://api.jina.ai/v1/embeddings",
-    ):
-        self.api_key = api_key or config.EMBEDDING_API_KEY
+    def __init__(self):
+        # Read all settings directly from config so we don't have to pass them in
+        self.api_key = config.EMBEDDING_API_KEY
         if not self.api_key:
             raise ValueError("Embedding API key required. Set EMBEDDING_API_KEY in .env")
 
-        # Defaults mirror 3/config.py changes
-        self.model = model or getattr(config, "EMBEDDING_MODEL", "jina-embeddings-v3")
-        self.task = task or getattr(config, "EMBEDDING_TASK", "text-matching")
-        self.base_url = base_url
+        self.model = getattr(config, "EMBEDDING_MODEL", "jina-embeddings-v3")
+        self.task = getattr(config, "EMBEDDING_TASK", "text-matching")
+        self.base_url = "https://api.jina.ai/v1/embeddings"
 
-    def _headers(self):
-        return {
+    def _request_embeddings(self, inputs):
+        """Call the API and return a list of embedding vectors for inputs."""
+        if not inputs:
+            return []
+
+        payload = {"model": self.model, "input": inputs, "task": self.task}
+        headers = {
             "Content-Type": "application/json",
             "Authorization": f"Bearer {self.api_key}",
         }
 
-    def _post(self, inputs):
-        if not inputs:
-            return []
+        resp = requests.post(self.base_url, headers=headers, json=payload, timeout=60)
+        if resp.status_code != 200:
+            raise RuntimeError(f"Jina embeddings API error: {resp.status_code} {resp.text}")
 
-        payload = {
-            "model": self.model,
-            "input": inputs,
-            "task": self.task,
-        }
-
-        response = requests.post(self.base_url, headers=self._headers(), json=payload, timeout=60)
-        if response.status_code != 200:
-            raise RuntimeError(f"Jina embeddings API error: {response.status_code} {response.text}")
-        data = response.json() or {}
+        data = resp.json() or {}
         items = data.get("data", [])
-        embeddings = []
-        for item in items:
-            emb = item.get("embedding")
-            if isinstance(emb, list):
-                embeddings.append(emb)
-        if len(embeddings) != len(inputs):
-            # Best-effort: pad/truncate to maintain alignment
-            min_len = min(len(embeddings), len(inputs))
-            embeddings = embeddings[:min_len]
-        return embeddings
+        return [item.get("embedding", []) for item in items]
 
     def embed_documents(self, texts):
-        """Return embeddings for a list of texts."""
+        """Return embeddings for a list of texts (same order and length)."""
         normalized = [(t or "").strip() for t in texts]
         if not any(normalized):
+            # Keep lengths aligned with input even if all are empty
             return [[] for _ in normalized]
-        return self._post(normalized)
+        return self._request_embeddings(normalized)
 
     def embed_query(self, text):
         """Return embedding for a single query string."""
-        results = self._post([text or ""])
+        results = self._request_embeddings([text or ""])
         return results[0] if results else []
-
 

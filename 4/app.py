@@ -273,8 +273,6 @@ def display_chat():
                             if caption:
                                 st.caption(caption)
                         st.divider()
-    
-    # Settings are now managed from the sidebar under ⚙️ Settings
 
     # Chat input
     if prompt := st.chat_input("Ask a question about your documents..."):

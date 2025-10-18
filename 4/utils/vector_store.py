@@ -10,12 +10,7 @@ class VectorStoreManager:
     
     def __init__(self):
         """Initialize the vector store manager using Jina embeddings."""
-        # Use Jina embeddings via our helper
-        self.embeddings = JinaEmbeddings(
-            api_key=config.EMBEDDING_API_KEY,
-            model=getattr(config, "EMBEDDING_MODEL", "jina-embeddings-v3"),
-            task=getattr(config, "EMBEDDING_TASK", "text-matching"),
-        )
+        self.embeddings = JinaEmbeddings()
         
         # Fresh per-session in-memory store (created on first add)
         self.vector_store = None

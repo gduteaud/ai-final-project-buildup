@@ -9,14 +9,9 @@ class RAGSystem:
         self.chat_history = []
         
         # Configure OpenAI client (OpenRouter-compatible)
-        # Include recommended headers if provided
         self.client = OpenAI(
             base_url=config.OPENROUTER_BASE_URL,
             api_key=config.OPENROUTER_API_KEY,
-            default_headers={
-                **({"HTTP-Referer": config.OPENROUTER_SITE_URL} if getattr(config, "OPENROUTER_SITE_URL", "") else {}),
-                **({"X-Title": config.OPENROUTER_APP_NAME} if getattr(config, "OPENROUTER_APP_NAME", "") else {}),
-            },
         )
         
     def _format_prompt(self, question, context_docs):

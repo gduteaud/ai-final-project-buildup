@@ -1,4 +1,3 @@
-# In utils/document_processor.py
 from pathlib import Path
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import (
@@ -17,7 +16,7 @@ class DocumentProcessor:
     def __init__(self, chunk_size=None, chunk_overlap=None):
         """Initialize the document processor with text splitter.
 
-        If ``chunk_size``/``chunk_overlap`` are not provided, fall back to config defaults.
+        If chunk_size/chunk_overlap are not provided, fall back to config defaults.
         """
         self.chunk_size = chunk_size if chunk_size is not None else config.CHUNK_SIZE
         self.chunk_overlap = chunk_overlap if chunk_overlap is not None else config.CHUNK_OVERLAP
