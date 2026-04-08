@@ -2,7 +2,7 @@
 from langchain_core.documents import Document
 from langchain_chroma import Chroma
 import config
-from .embedding import JinaEmbeddings
+from .embedding import OpenRouterEmbeddings
 
 
 class VectorStoreManager:
@@ -11,11 +11,7 @@ class VectorStoreManager:
     def __init__(self):
         """Initialize the vector store manager using Jina embeddings."""
         # Use Jina embeddings via our helper
-        self.embeddings = JinaEmbeddings(
-            api_key=config.EMBEDDING_API_KEY,
-            model=config.EMBEDDING_MODEL,
-            task=getattr(config, "EMBEDDING_TASK", "text-matching"),
-        )
+        self.embeddings = OpenRouterEmbeddings()
         
         # Fresh per-session in-memory store (created on first add)
         self.vector_store = None

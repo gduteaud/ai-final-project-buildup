@@ -2,15 +2,15 @@
 from langchain_core.documents import Document
 from langchain_chroma import Chroma
 import config
-from .embedding import JinaEmbeddings
+from .embedding import OpenRouterEmbeddings
 
 
 class VectorStoreManager:
     """Manages the vector store for document embeddings."""
-    
+
     def __init__(self):
-        """Initialize the vector store manager using Jina embeddings."""
-        self.embeddings = JinaEmbeddings()
+        """Initialize the vector store manager using OpenRouter embeddings."""
+        self.embeddings = OpenRouterEmbeddings()
         
         # Fresh per-session in-memory store (created on first add)
         self.vector_store = None

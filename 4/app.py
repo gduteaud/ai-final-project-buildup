@@ -83,10 +83,6 @@ def display_sidebar():
             st.error("⚠️ OpenRouter API key not found! Please set OPENROUTER_API_KEY in your .env file.")
             st.stop()
         
-        if not config.EMBEDDING_API_KEY:
-            st.error("⚠️ Embedding API key not found! Please set EMBEDDING_API_KEY in your .env file (required for embeddings).")
-            st.stop()
-        
         # File uploader
         uploaded_files = st.file_uploader(
             "Upload documents",
