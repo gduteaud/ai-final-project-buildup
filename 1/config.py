@@ -2,23 +2,19 @@
 # This typically includes environment variables as well as other, non-environment-specific, non-sensitive settings
 
 import os
-from dotenv import load_dotenv
+# Example: Load environment variables from a .env file if needed
+# from dotenv import load_dotenv
+# load_dotenv()
 
-# Load environment variables
-load_dotenv()
-
-# OpenRouter Configuration
-OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
-OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
-
-# Embeddings Configuration
-EMBEDDING_API_KEY = os.getenv("EMBEDDING_API_KEY")
-
-# Model Configuration
-# OpenRouter model names: see https://openrouter.ai/models for options
-LLM_MODEL = os.getenv("LLM_MODEL", "mistralai/mistral-7b-instruct:free")
-TEMPERATURE = 1.0
-MAX_TOKENS = 500
-
-# Upload Configuration
+# Generic configuration settings for your Streamlit app
+APP_NAME = "My Streamlit App"
+DEBUG_MODE = True
+DEFAULT_LANGUAGE = "en"
 SUPPORTED_FILE_TYPES = ["pdf", "txt", "docx", "md", "html"]
+
+# Example: Custom API endpoint (not LLM-specific)
+API_BASE_URL = os.getenv("API_BASE_URL", "https://api.example.com/v1")
+
+# Example: Feature flags
+ENABLE_UPLOADS = True
+MAX_UPLOAD_SIZE_MB = 10
