@@ -21,7 +21,9 @@ class OpenRouterEmbeddings:
         # Read all settings directly from config so we don't have to pass them in
         self.api_key = config.OPENROUTER_API_KEY
         if not self.api_key:
-            raise ValueError("OpenRouter API key required. Set OPENROUTER_API_KEY in .env")
+            raise ValueError(
+                "OpenRouter API key required. Set OPENROUTER_API_KEY in the project root `.env`."
+            )
 
         self.model = getattr(config, "EMBEDDING_MODEL", "openai/text-embedding-3-small")
         self.base_url = f"{config.OPENROUTER_BASE_URL}/embeddings"

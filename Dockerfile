@@ -16,9 +16,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY requirements.txt /app/requirements.txt
 RUN pip install --upgrade pip && pip install -r /app/requirements.txt
 
+# Shared OpenRouter settings (imported by each app's config.py)
+COPY openrouter_config.py /app/openrouter_config.py
+
 # Select which sub-app to copy and run
 ARG APP_DIR=4
 COPY ${APP_DIR} /app/${APP_DIR}
+
+ENV PYTHONPATH=/app
 
 WORKDIR /app/${APP_DIR}
 

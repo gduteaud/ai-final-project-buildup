@@ -90,7 +90,10 @@ def display_sidebar():
         st.subheader("⚙️ Inference Parameters")
 
         if not config.OPENROUTER_API_KEY:
-            st.error("OpenRouter API key not found. Set OPENROUTER_API_KEY in your .env.")
+            st.error(
+                "OpenRouter API key not found. Set OPENROUTER_API_KEY in the project root `.env` "
+                "(see `.env.example`)."
+            )
             st.stop()
 
         col1, col2 = st.columns(2)

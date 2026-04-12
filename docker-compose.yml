@@ -9,10 +9,6 @@ services:
       - "8501:8501"
     env_file:
       - .env
-    environment:
-      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
-      - EMBEDDING_API_KEY=${EMBEDDING_API_KEY}
-      - LLM_MODEL=${LLM_MODEL:-mistralai/mistral-7b-instruct:free}
     restart: unless-stopped
 
   app2:
@@ -25,9 +21,6 @@ services:
       - "8502:8501"
     env_file:
       - .env
-    environment:
-      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
-      - LLM_MODEL=${LLM_MODEL:-meta-llama/llama-4-maverick:free}
     restart: unless-stopped
 
   app3:
@@ -40,10 +33,6 @@ services:
       - "8503:8501"
     env_file:
       - .env
-    environment:
-      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
-      - EMBEDDING_API_KEY=${EMBEDDING_API_KEY}
-      - LLM_MODEL=${LLM_MODEL:-mistralai/mistral-7b-instruct:free}
     restart: unless-stopped
 
   app4:
@@ -56,10 +45,6 @@ services:
       - "8504:8501"
     env_file:
       - .env
-    environment:
-      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
-      - EMBEDDING_API_KEY=${EMBEDDING_API_KEY}
-      - LLM_MODEL=${LLM_MODEL:-mistralai/mistral-7b-instruct:free}
     restart: unless-stopped
 
 

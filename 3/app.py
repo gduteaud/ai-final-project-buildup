@@ -80,7 +80,10 @@ def display_sidebar():
         
         # API Key check
         if not config.OPENROUTER_API_KEY:
-            st.error("⚠️ OpenRouter API key not found! Please set OPENROUTER_API_KEY in your .env file.")
+            st.error(
+                "⚠️ OpenRouter API key not found! Set OPENROUTER_API_KEY in the project root `.env` "
+                "(see `.env.example`)."
+            )
             st.stop()
         
         # File uploader

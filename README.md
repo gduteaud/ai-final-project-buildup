@@ -7,8 +7,9 @@
 
 ```
 OPENROUTER_API_KEY=your_openrouter_api_key
-# Optional (defaults if not set)
-LLM_MODEL=mistralai/mistral-7b-instruct:free
+# Optional — see openrouter_config.py / .env.example
+# LLM_MODEL=...
+# EMBEDDING_MODEL=...
 ```
 
 2. Build and run with Docker Compose:
@@ -43,5 +44,6 @@ docker run --rm -p 8501:8501 --env-file .env app1
 2. Create a virtual environment (`python -m venv my-env`)
 3. Activate your newly created virtual environment (`my-env\Scripts\activate` or equivalent)
 4. Install the dependencies (`pip install -r requirements.txt`)
-5. `cd` into one of the numbered subdirectories (1/2/3/4)
-6. Run `streamlit run app.py`
+5. Create `.env` in the **project root** if you have not already (same folder as `docker-compose.yml`).
+6. `cd` into one of the numbered subdirectories (1/2/3/4)
+7. Run `streamlit run app.py`

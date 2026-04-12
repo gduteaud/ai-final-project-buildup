@@ -1,17 +1,17 @@
 """Configuration settings for the RAG chatbot."""
 import os
-from dotenv import load_dotenv
+import sys
+from pathlib import Path
 
-# Load environment variables
-load_dotenv()
+_repo_root = Path(__file__).resolve().parent.parent
+if str(_repo_root) not in sys.path:
+    sys.path.insert(0, str(_repo_root))
 
-# OpenRouter Configuration
-OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
-OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
+import openrouter_config as _shared
 
-# Model Configuration
-# OpenRouter model names: see https://openrouter.ai/models for options
-LLM_MODEL = "meta-llama/llama-4-maverick:free"
+OPENROUTER_API_KEY = _shared.OPENROUTER_API_KEY
+OPENROUTER_BASE_URL = _shared.OPENROUTER_BASE_URL
+LLM_MODEL = _shared.LLM_MODEL
 TEMPERATURE = 1.0
 MAX_TOKENS = 500
 TOP_P = 1.0
@@ -20,4 +20,3 @@ SYSTEM_PROMPT = os.getenv("SYSTEM_PROMPT", "You are a helpful assistant.")
 
 # Upload Configuration
 SUPPORTED_FILE_TYPES = ["pdf", "txt", "docx", "md", "html"]
-
